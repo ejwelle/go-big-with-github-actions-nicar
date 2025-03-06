@@ -5,6 +5,9 @@ on:
   schedule:
   - cron: "0 0 * * *" # GMT/London;look at crontab.guru for schedule
 
+permissions:                                                      # make sure to add permissions
+  contents: write
+
 jobs:
   scrape:
     name: Scrape
