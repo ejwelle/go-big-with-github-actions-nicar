@@ -1,0 +1,34 @@
+name: First Scraper
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: "0 0 * * *" # GMT/London;look at crontab.guru for schedule
+
+jobs:
+  scrape:
+    name: Scrape
+    runs-on: ubuntu-latest # blank computer, clone repo into your computer
+    steps:  
+      - name: Checkout  # uses a shortcut from marketplace unlike run from past action
+        uses: actions/checkout@v4                                 # packaged action//libraries in the open
+
+      - name: Install Python                                       #step 2 for job called scrape
+        uses: actions/setup-python@v5                              #prepacked action
+        with:
+          python-version: '3.12'
+          
+      # add my own code here 
+      - name: Install scraper  
+        run: pip install warn-scraper
+        
+      - name: Scrape
+        run: warn-scraper ia --data-dir ./data/                     # where to save warn data from Iowa
+
+      # computer saves data and checks back in with you
+      - name: Commit and push
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add ./data/                                           # can change director
+          git commit -m "Latest data for Iowa" && git push || true  # if you have nothing to commit it wont fail      
