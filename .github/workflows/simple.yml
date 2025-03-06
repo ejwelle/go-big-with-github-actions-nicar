@@ -1,0 +1,12 @@
+name: First Action
+
+on:  # this is like telling 
+  workflow_dispatch:
+
+jobs:
+  hello:
+    name: Say Hello
+    runs-on: ubuntu-latest # sorta like mac v windows
+    steps:
+      - name: Hello world
+        run: echo "Hello world" # run is part of the same step item as name 
